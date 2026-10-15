@@ -1,0 +1,101 @@
+@import 'tailwindcss';
+
+/*
+ * Design tokens
+ * -------------
+ * Raw colour values live in CSS variables on :root. Tailwind utilities
+ * (bg-surface, text-ink, ...) point at those variables via `@theme inline`.
+ * To add dark mode later, override the variables under `.dark` (or a
+ * prefers-color-scheme media query) -- no component changes needed.
+ */
+:root {
+  color-scheme: light;
+
+  --surface: #faf6ee; /* page background (warm paper) */
+  --raised: #fffdf8; /* cards */
+  --sunken: #f1eadc; /* inset panels */
+  --ink: #2a211a; /* primary text */
+  --muted: #5e5247; /* secondary text (6.7:1 on surface) */
+  --line: #ddd2be; /* borders and dividers */
+  --accent: #a6401f; /* terracotta: primary actions */
+  --accent-strong: #7f2f14; /* hover / pressed */
+  --accent-soft: #f3dccf; /* tinted backgrounds */
+  --on-accent: #fffdf8; /* text on accent */
+  --secondary: #2f5d4a; /* deep green: source / info accents */
+  --secondary-soft: #dce9e1;
+  --focus: #2457a6; /* focus ring */
+  --sample: #6a4a00; /* "Sample content" badge text */
+  --sample-soft: #f7e7b4; /* "Sample content" badge background */
+}
+
+/* Dark mode is intentionally not built yet. Example for later:
+.dark { --surface: #1c1713; --raised: #251f19; --ink: #f2eadc; ... }
+*/
+
+@theme inline {
+  --color-surface: var(--surface);
+  --color-raised: var(--raised);
+  --color-sunken: var(--sunken);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-accent-soft: var(--accent-soft);
+  --color-on-accent: var(--on-accent);
+  --color-secondary: var(--secondary);
+  --color-secondary-soft: var(--secondary-soft);
+  --color-focus: var(--focus);
+  --color-sample: var(--sample);
+  --color-sample-soft: var(--sample-soft);
+
+  --font-display: 'Fraunces', 'Iowan Old Style', Georgia, serif;
+  --font-serif: 'Source Serif 4', 'Iowan Old Style', Georgia, serif;
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-surface);
+    color: var(--color-ink);
+    font-family: var(--font-serif);
+    font-size: 1.0625rem; /* 17px: comfortable one-handed reading */
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    line-height: 1.2;
+    text-wrap: balance;
+  }
+
+  /* One consistent, high-visibility focus ring for keyboard users. */
+  :focus-visible {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* <main> is focused programmatically after navigation; no ring needed. */
+  main:focus {
+    outline: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
